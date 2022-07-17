@@ -1,8 +1,8 @@
 /****************************************************************************
  *
- * omp-demo4.c - Demo with OpenMP
+ * omp-reduction - Demo of reduction operators with OpenMP
  *
- * Copyright (C) 2017 by Moreno Marzolla <moreno.marzolla(at)unibo.it>
+ * Copyright (C) 2016 by Moreno Marzolla <moreno.marzolla(at)unibo.it>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,27 +16,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * --------------------------------------------------------------------------
+ * ----------------------------------------------------------------------------
  *
  * Compile with:
- * gcc -fopenmp omp-demo4.c -o omp-demo4.out -lgomp
+ * gcc -fopenmp omp-reduction.c -o omp-reduction.out
  *
  * Run with:
- * ./omp-demo4.out
+ * OMP_NUM_THREADS=1 ./omp-reduction.out
+ * OMP_NUM_THREADS=2 ./omp-reduction.out
+ * OMP_NUM_THREADS=4 ./omp-reduction.out
  *
  ****************************************************************************/
+
 #include <stdio.h>
-#include <omp.h>
 
-int main( int argc, char* argv[] )
+int main( void )
 {
-    printf("Before parallel region: threads=%d, max_threads=%d\n",
-           omp_get_num_threads(), omp_get_max_threads());
-#pragma omp parallel
+    int a = 2;
+#pragma omp parallel reduction(*:a)
     {
-        printf("Inside parallel region: threads=%d, max_threads=%d\n",
-               omp_get_num_threads(), omp_get_max_threads());
+	a += 2;
     }
-
+    printf("%d\n",a);
     return 0;
 }

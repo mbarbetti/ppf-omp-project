@@ -19,10 +19,10 @@
  * --------------------------------------------------------------------------
  *
  * Compile with:
- * gcc -std=c99 -Wall -pedantic -fopenmp omp-nested.c -o omp-nested
+ * gcc -std=c99 -Wall -pedantic -fopenmp omp-nested.c -o omp-nested.out
  *
  * Run with:
- * OMP_NESTED=true ./omp-nested
+ * OMP_NESTED=true ./omp-nested.out
  *
  ****************************************************************************/
 #include <stdio.h>

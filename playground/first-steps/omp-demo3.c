@@ -19,10 +19,10 @@
  * --------------------------------------------------------------------------
  *
  * Compile with:
- * gcc -fopenmp omp-demo3.c -o omp-demo3 -lgomp
+ * gcc -fopenmp omp-demo3.c -o omp-demo3.out -lgomp
  *
  * Run with:
- * ./omp-demo3
+ * ./omp-demo3.out
  *
  ****************************************************************************/
 #include <stdio.h>

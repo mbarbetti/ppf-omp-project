@@ -19,10 +19,10 @@
  * --------------------------------------------------------------------------
  *
  * Compile with:
- * gcc -std=c99 -Wall -pedantic -fopenmp omp-scope.c -o omp-scope
+ * gcc -std=c99 -Wall -pedantic -fopenmp omp-scope.c -o omp-scope.out
  *
  * Run with:
- * ./omp-scope
+ * ./omp-scope.out
  *
  ****************************************************************************/
 #include <stdio.h>

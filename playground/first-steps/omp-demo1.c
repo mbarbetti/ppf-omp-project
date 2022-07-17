@@ -19,10 +19,10 @@
  * --------------------------------------------------------------------------
  *
  * Compile with:
- * gcc -fopenmp omp-demo1.c -o omp-demo1
+ * gcc -fopenmp omp-demo1.c -o omp-demo1.out
  *
  * Run with:
- * OMP_NUM_THREADS=8 ./omp-demo1
+ * OMP_NUM_THREADS=8 ./omp-demo1.out
  *
  ****************************************************************************/
 #include <stdio.h>
