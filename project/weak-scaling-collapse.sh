@@ -9,7 +9,7 @@
 # accordingly to the formula: new_size = base_size * sqrt(P), where 
 # base_size is the one used with P = 1. The expected behavior is 
 # that the execution time of the program remains constant although 
-# one varies P, and with a speedup equal to 1.
+# one varies P, and that the speedup is equal to 1 everywhere.
 
 # Author  : Matteo Barbetti (matteo.barbetti@unifi.it)
 # Credits : Moreno Marzolla (moreno.marzolla@unibo.it)
