@@ -1,6 +1,8 @@
 /****************************************************************************
  *
  * my-mandelbrot-collapse.c - saves the Mandelbrot set into a CSV file
+ * 
+ * Credits: Moreno Marzolla <moreno.marzolla(at)unibo.it>
  *
  * Copyright (C) 2022 by Matteo Barbetti <matteo.barbetti(at)unifi.it>
  *
@@ -115,10 +117,10 @@ int main( int argc, char *argv[] )
 	}
     }
     const double elapsed = hpc_gettime() - tstart;
-    printf ("Elapsed time %f\n", elapsed);
+    printf ("Elapsed time: %f\n", elapsed);
 
     char filepath[256];
-    snprintf ( filepath, sizeof(filepath), "./data/my-mandelbrot-collapse_%dx%d.csv", x_size, y_size );
+    snprintf ( filepath, sizeof(filepath), "./data/mandelbrot/matrix_%dx%d.csv", x_size, y_size );
     FILE *fpt = fopen ( filepath, "w" );
     for ( y = 0; y < y_size; y++ ) {
         for ( x = 0; x < x_size; x++ ) {
