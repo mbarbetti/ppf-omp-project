@@ -19,7 +19,7 @@ if [ ! -f ./my-mandelbrot-collapse.out ]; then
 fi
 
 echo -n -e "p\t\tx_size\t\ty_size"
-for rep in `seq 5`; do
+for rep in `seq 20`; do
     echo -n -e "\t\tt_$rep"
 done
 echo ""
@@ -30,7 +30,7 @@ CORES=`cat /proc/cpuinfo | grep processor | wc -l`   # number of cores
 
 for p in `seq $CORES`; do
     echo -n -e "$p\t\t$PROB_XSIZE\t\t$PROB_YSIZE\t"
-    for rep in `seq 5`; do
+    for rep in `seq 20`; do
         EXEC_TIME="$( OMP_NUM_THREADS=$p OMP_SCHEDULE="static,1" ./my-mandelbrot-collapse.out $PROB_XSIZE $PROB_YSIZE | sed 's/Elapsed time: //' )"
         echo -n -e "\t${EXEC_TIME}"
     done

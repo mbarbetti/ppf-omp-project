@@ -23,7 +23,7 @@ if [ ! -f ./my-mandelbrot.out ]; then
 fi
 
 echo -n -e "p\t\tx_size\t\ty_size"
-for rep in `seq 5`; do
+for rep in `seq 20`; do
     echo -n -e "\t\tt_$rep"
 done
 echo ""
@@ -37,7 +37,7 @@ for p in `seq $CORES`; do
     PROB_XSIZE="$( python3 ./utils/compute_new_size.py -s $XSIZE0 -p $p | sed 's/prob size computed: //' )"
     PROB_YSIZE="$( python3 ./utils/compute_new_size.py -s $YSIZE0 -p $p | sed 's/prob size computed: //' )"
     echo -n -e "$p\t\t$PROB_XSIZE\t\t$PROB_YSIZE\t"
-    for rep in `seq 5`; do
+    for rep in `seq 20`; do
         EXEC_TIME="$( OMP_NUM_THREADS=$p OMP_SCHEDULE="static,1" ./my-mandelbrot.out $PROB_XSIZE $PROB_YSIZE | sed 's/Elapsed time: //' )"
         echo -n -e "\t${EXEC_TIME}"
     done
