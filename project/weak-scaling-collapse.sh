@@ -11,14 +11,29 @@
 # that the execution time of the program remains constant although 
 # one varies P, and that the speedup is equal to 1 everywhere.
 
+# Run with:
+# source weak-scaling-collapse.sh <scheduling_type> <scheduling_chunksize>
+
 # Author  : Matteo Barbetti (matteo.barbetti@unifi.it)
 # Credits : Moreno Marzolla (moreno.marzolla@unibo.it)
-# Last updated : 2022-07-18
+# Last updated : 2022-07-20
 
 if [ ! -f ./my-mandelbrot-collapse.out ]; then
     echo
     echo "./my-mandelbrot-collapse.out not found!"
     echo "Please compile it following the instructions reported on its source code."
+    exit 1
+fi
+
+if ! [ $1 = "static" ] && ! [ $2 = "dynamic" ]; then
+    echo
+    echo "The scheduling strategy should be choosen in {'static', 'dynamic'}."
+    exit 1
+fi
+
+if [ $2 -lt 1 ]; then
+    echo
+    echo "The scheduling chunksize should be greater than 0."
     exit 1
 fi
 
@@ -38,7 +53,7 @@ for p in `seq $CORES`; do
     PROB_YSIZE="$( python3 ./utils/compute_new_size.py -s $YSIZE0 -p $p | sed 's/prob size computed: //' )"
     echo -n -e "$p\t\t$PROB_XSIZE\t\t$PROB_YSIZE\t"
     for rep in `seq 20`; do
-        EXEC_TIME="$( OMP_NUM_THREADS=$p OMP_SCHEDULE="static,1" ./my-mandelbrot-collapse.out $PROB_XSIZE $PROB_YSIZE | sed 's/Elapsed time: //' )"
+        EXEC_TIME="$( OMP_NUM_THREADS=$p OMP_SCHEDULE="$1,$2" ./my-mandelbrot-collapse.out $PROB_XSIZE $PROB_YSIZE | sed 's/Elapsed time: //' )"
         echo -n -e "\t${EXEC_TIME}"
     done
     echo ""

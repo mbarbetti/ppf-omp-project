@@ -7,14 +7,29 @@
 # with the increasing of P (T_P = T_1 / P), and that the speedup (s)
 # increases linearly with the increasing of P (s = T_1 / T_P).
 
+# Run with:
+# source strong-scaling.sh <scheduling_type> <scheduling_chunksize>
+
 # Author  : Matteo Barbetti (matteo.barbetti@unifi.it)
 # Credits : Moreno Marzolla (moreno.marzolla@unibo.it)
-# Last updated : 2022-07-18
+# Last updated : 2022-07-20
 
 if [ ! -f ./my-mandelbrot.out ]; then
     echo
     echo "./my-mandelbrot.out not found!"
     echo "Please compile it following the instructions reported on its source code."
+    exit 1
+fi
+
+if ! [ $1 = "static" ] && ! [ $2 = "dynamic" ]; then
+    echo
+    echo "The scheduling strategy should be choosen in {'static', 'dynamic'}."
+    exit 1
+fi
+
+if [ $2 -lt 1 ]; then
+    echo
+    echo "The scheduling chunksize should be greater than 0."
     exit 1
 fi
 
@@ -31,7 +46,7 @@ CORES=`cat /proc/cpuinfo | grep processor | wc -l`   # number of cores
 for p in `seq $CORES`; do
     echo -n -e "$p\t\t$PROB_XSIZE\t\t$PROB_YSIZE\t"
     for rep in `seq 20`; do
-        EXEC_TIME="$( OMP_NUM_THREADS=$p OMP_SCHEDULE="static,1" ./my-mandelbrot.out $PROB_XSIZE $PROB_YSIZE | sed 's/Elapsed time: //' )"
+        EXEC_TIME="$( OMP_NUM_THREADS=$p OMP_SCHEDULE="$1,$2" ./my-mandelbrot.out $PROB_XSIZE $PROB_YSIZE | sed 's/Elapsed time: //' )"
         echo -n -e "\t${EXEC_TIME}"
     done
     echo ""
