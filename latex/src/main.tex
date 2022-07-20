@@ -3,6 +3,24 @@
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 
+\usepackage{geometry}
+\geometry{a4paper, top=2.5cm, bottom=2.5cm,
+		  left=2.5cm, right=2.5cm}
+		  
+\usepackage{hyperref}
+
+\title{PPF project report}
+\author{Matteo Barbetti}
+
 \begin{document}
-  bla bla bla
+
+\maketitle
+\input{0_intro.tex}
+\input{1_method.tex}
+\input{2_result.tex}
+\input{3_concl.tex}
+
+\bibliographystyle{unsrt}
+\bibliography{main}
+
 \end{document}
