@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 from argparse import ArgumentParser
 
-avail_threads = [ f"{i}" for i in range(mp.cpu_count()) ]   # list of available threads
+avail_threads = [ f"{i+1}" for i in range(mp.cpu_count()) ]   # list of available threads
 
 parser = ArgumentParser()
 parser . add_argument ( "-f" , "--file"        , default = None )
@@ -19,11 +19,11 @@ dfs = list()   # list of DataFrames
 if (args.file is not None):
 
   filename = args.file.split("/")[-1] if ("/" in args.file) else args.file
-  img_name = f"./img/t_exec_{filename[:-4]}.png"
+  img_name = f"./img/time_{filename[:-4]}.png"
 
   ext = filename.split(".")[-1]
   if (ext != "csv"): 
-    raise ValueError (f"The execution times should be passes as CSV file, instead {args.file} passed.")
+    raise ValueError (f"The elapsed times should be passes as CSV file, instead {args.file} passed.")
   
   dfs . append ( pd.read_csv (args.file, index_col = 0) )
   labels = [ None ]
@@ -31,7 +31,7 @@ if (args.file is not None):
 else:
 
   if (args.scheduling is not None) and (args.num_threads is not None):
-    img_name = f"./img/t_exec_psVSpsc_{args.num_threads}threads_{args.scheduling}.png"
+    img_name = f"./img/time_psVSpsc_{args.num_threads}threads_{args.scheduling}.png"
 
     for vrs in ["ps", "psc"]:
       file = f"./data/times/{vrs}_{args.num_threads}threads_{args.scheduling}.csv"
@@ -41,7 +41,9 @@ else:
     labels = [ "only inner loop parallelized", "$\mathtt{collapse(2)}$ directive used" ]
 
   else:
-    raise ValueError ("mò ci penso")   # TODO add error message
+    raise ValueError ( f"You should decide if passing a file ('-f') obtaining the relative "
+                       f"performance plot, OR passing both the scheduling type ('-s') and "
+                       f"the number of threads ('-n') to obtaine the comparison plot." )
 
 if ("static" in img_name):
   title = "Static scheduling performance"
@@ -56,7 +58,7 @@ if title:
     text = text.split("t")
     title += f" ({text[0]} t{text[1]})"
 
-## Execution time plot
+## Elapsed time plot
 fig, ax = plt.subplots ( figsize = (7,5), dpi = 200 )
 
 for i, (df, label) in enumerate ( zip(dfs, labels) ):
@@ -66,7 +68,7 @@ for i, (df, label) in enumerate ( zip(dfs, labels) ):
 
   ax.set_title  ( f"{title}", fontsize = 14 )
   ax.set_xlabel ( "Scheduling chunksize", fontsize = 12 )
-  ax.set_ylabel ( "Execution time [s]", fontsize = 12 )
+  ax.set_ylabel ( "Elapsed time [s]", fontsize = 12 )
   ax.errorbar ( chunksize, t_mean, yerr = t_errs, marker = "o", markersize = 2, 
                 capsize = 2, elinewidth = 1, lw = 0.75, label = label, zorder = i )
   ax.set_xscale ( "log" )
@@ -76,4 +78,4 @@ if (args.file is None): plt.legend ( loc = "upper left", fontsize = 10 )
 plt.savefig (img_name)
 plt.show()
 
-print ( f"Execution time plot correctly exported to {img_name}" )
+print ( f"Elapsed time plot correctly exported to {img_name}" )
