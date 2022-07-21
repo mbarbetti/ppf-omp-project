@@ -1,6 +1,0 @@
-\section{Introduction}\label{sec:intro}
-This document reports the methodology followed and the results obtained for the final project of ``Parallel Programming Fundamentals'', a PhD course of the University of Siena given by Roberto Giorgi and Marco Procaccini, and attended from $23^{\rm{rd}}$ to $29^{\rm{th}}$ May 2022.
-
-The aim of the project is to quantify the parallelism achieved by a program using the OpenMP APIs \cite{openmp} to speed up the computation of the Mandelbrot set \cite{mandelbrot}. The program used for this study is written in C and corresponds to a slightly modified version of the \texttt{omp-mandelbrot.c} script provided within the course materials. 
-
-The execution time of the program has been measured for different types of scheduling and partition sizes, and its performance has been tested in weak and strong scaling conditions, as better described in Section \ref{sec:method}. The obtained results of the scheduling study are reported in Section \ref{sec:sched}, while the speedup achieved with weak and strong scaling conditions are shown in Section \ref{sec:scale}. In Section \ref{sec:concl}, some general remarks are discussed, and an estimation of the parallelism of the program is given.
