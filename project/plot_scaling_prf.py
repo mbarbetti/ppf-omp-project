@@ -63,7 +63,12 @@ ax.set_ylabel ( "Speedup", fontsize = 12 )
 ax.plot ( processors, speedup_ideal, color = "black", ls = "--", 
           lw = 0.75, label = "ideal speedup", zorder = 0 )
 ax.errorbar ( processors, speedup, yerr = speedup_errs, marker = "o", markersize = 2, 
-              capsize = 2, elinewidth = 1, lw = 0.75, label = "measured speedup", zorder = 1 )
+              capsize = 2, elinewidth = 1, lw = 0.75, label = "measured speedup", zorder = 2 )
+if (args.scaling == "strong"):
+  speedup_max = speedup[np.argmax(speedup)] + 2 * speedup_errs[np.argmax(speedup)]
+  speedup_max *= np.ones_like(speedup)
+  ax.plot ( processors, speedup_max, color = "red", ls = "--", 
+            lw = 0.75, label = "maximum speedup", zorder = 1 )
 ax.legend ( loc = loc_2, fontsize = 10 )
 img_name = f"./img/speedup_{filename[:-4]}.png"
 plt.savefig (img_name)

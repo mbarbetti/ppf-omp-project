@@ -108,10 +108,10 @@ int main( int argc, char *argv[] )
 	for ( x = 0; x < x_size; x++ ) {
             const double re = x_min + (x_max - x_min) * (float)(x) / (x_size - 1);
             const double im = y_max - (y_max - y_min) * (float)(y) / (y_size - 1);
-            const int v = iterate(re, im);
+            const int it = iterate(re, im);
 #pragma omp critical
-	    if ( v < MAXIT ) {
-	        matrix[y*y_size + x] = v;
+	    if ( it < MAXIT ) {
+	        matrix[y*y_size + x] = it;
 	    }
 	}
     }
