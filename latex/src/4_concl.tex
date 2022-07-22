@@ -1,1 +1,9 @@
+%   +----------------+
+%   |   CONCLUSION   |
+%   +----------------+
 \section{Conclusion}\label{sec:concl}
+Some timing performance studies on programs to compute the Mandelbrot set have been carried out. Two programs based on OpenMP have been prepared: the first program designed to speed up only the inner loop of the nested loop used to fill the $1024 \times 768$ matrix, while the second one slightly modified to parallelized the whole nested loop through the \ompcode{collapse(2)} clause. 
+
+Different scheduling strategies have been investigated, showing behaviors significantly inconsistent between the \code{static} and \code{dynamic} scheduling, especially for what concerns the overhead treatment. In particular, the results obtained for the \code{dynamic} scheduling varying the chunksize values are still not completely understood, and should require additional investigations.
+
+Selected the best performing scheduling strategy, namely \ompcode{schedule(static,1)}, studies on weak and strong scaling conditions have been carried out. For both the cases, the machine used for the tests has shown performance significantly inconsistent with the ideal one. This is clearly in accordance with the Work Law that has occurred with a small amount of overhead brought by each thread, phenomenon well represented by the plots in Figure~\ref{fig:weak_scale}. We land to the same conclusion looking at the plots in Figure~\ref{fig:strong_scale} that also contains an additional information. In particular, from the Span Law we know that the speedup achieved using various threads cannot overcome the maximum speedup, named \emph{parallelism}. We can then used the trend of speedup reported on the second row of Figure~\ref{fig:strong_scale} to extrapolate an estimate\footnote{Actually, better saying, the result reported is a lower bound and not an estimate of the parallelism.} of the parallelism: $S_{\rm{max}} \gtrsim 9$.
